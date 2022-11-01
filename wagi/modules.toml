@@ -1,0 +1,8 @@
+[[module]]
+# Example running a WASM file.
+route = "/"
+module = "app.wasm"
+
+[[module]]
+route = "/hello/..."
+module = "app.wasm"

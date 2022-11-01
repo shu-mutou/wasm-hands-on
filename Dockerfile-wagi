@@ -1,0 +1,18 @@
+FROM rust:slim-bullseye
+
+RUN apt update -y && \
+    apt install -y curl git libssl-dev && \
+    rm -fr /var/apt/lists/* && \
+    apt remove --purge
+
+RUN echo "$PROXY_CERT" > /etc/ssl/certs/proxy-cert.crt
+
+ENV OPENSSL_LIB_DIR=/usr/lib/x86_64-linux-gnu/
+ENV OPENSSL_INCLUDE_DIR=/usr/include/openssl/
+
+RUN git clone https://github.com/deislabs/wagi && \
+    cd wagi && \
+    cargo build --release && \
+    cp target/release/wagi /usr/local/bin/wagi
+
+CMD bash
